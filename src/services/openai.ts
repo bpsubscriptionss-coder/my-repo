@@ -184,28 +184,39 @@ function generateFallbackEvaluation(cases: Case[]): {
     })),
   }));
 
-  // Calculate rating based on answer length and quality indicators
+  // Calculate rating based on answer quality indicators
   let totalScore = 0;
   let totalQuestions = 0;
   
   cases.forEach(c => {
     c.questions.forEach(q => {
       const answerLength = q.userAnswer.trim().length;
-      const hasFramework = /swot|porter|4p|analysis|framework|strategy|implement/i.test(q.userAnswer);
-      const hasMetrics = /\d+%|\$|metric|measure|kpi/i.test(q.userAnswer);
+      const hasFramework = /swot|porter|4p|analysis|framework|strategy|implement|approach|method|process/i.test(q.userAnswer);
+      const hasMetrics = /\d+%|\$|metric|measure|kpi|roi|revenue|profit|cost|budget/i.test(q.userAnswer);
+      const hasRiskMitigation = /risk|challenge|mitigation|contingency|alternative|scenario|potential|issue/i.test(q.userAnswer);
+      const hasStakeholder = /stakeholder|customer|employee|investor|market|competitive|competitor/i.test(q.userAnswer);
+      const hasActionable = /implement|execute|action|step|phase|timeline|resource|team|responsible/i.test(q.userAnswer);
       
-      let score = 5; // Base score
-      if (answerLength > 200) score += 1;
-      if (answerLength > 400) score += 1;
-      if (hasFramework) score += 1;
-      if (hasMetrics) score += 1;
+      let score = 3; // Base score
+      
+      // Length-based scoring (more detailed answers tend to be better)
+      if (answerLength > 150) score += 0.5;
+      if (answerLength > 300) score += 0.5;
+      if (answerLength > 500) score += 0.5;
+      
+      // Quality indicators
+      if (hasFramework) score += 1.5;
+      if (hasMetrics) score += 1.5;
+      if (hasRiskMitigation) score += 1;
+      if (hasStakeholder) score += 1;
+      if (hasActionable) score += 1;
       
       totalScore += Math.min(score, 10);
       totalQuestions += 1;
     });
   });
 
-  const rating = totalQuestions > 0 ? Math.round(totalScore / totalQuestions) : 5;
+  const rating = totalQuestions > 0 ? Math.round(totalScore / totalQuestions * 2) / 2 : 5;
 
   return {
     cases: evaluatedCases,

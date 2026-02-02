@@ -101,7 +101,7 @@ export default function CategorySelectionPage() {
 
                   <Button
                     onClick={() => handleCategorySelect(category.id)}
-                    className={`w-full bg-${category.color} hover:bg-${category.color}/90 text-white font-heading text-sm px-6 py-3 rounded-lg transition-all duration-300`}
+                    className={`w-full bg-electric-teal hover:bg-electric-teal/90 text-background font-heading text-sm px-6 py-3 rounded-lg transition-all duration-300`}
                   >
                     Select {category.name}
                   </Button>
