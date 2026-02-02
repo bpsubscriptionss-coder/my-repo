@@ -40,13 +40,13 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
                 <span className="font-paragraph text-sm text-muted-gray-foreground">
-                  contact@casenexus.com
+                  contact@caseproiq.com
                 </span>
               </li>
               <li className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-primary" />
                 <span className="font-paragraph text-sm text-muted-gray-foreground">
-                  www.casenexus.com
+                  www.caseproiq.com
                 </span>
               </li>
             </ul>
