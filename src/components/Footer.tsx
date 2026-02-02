@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-lg">
                 <Zap className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="font-heading text-xl text-foreground">CaseNexus</span>
+              <span className="font-heading text-xl text-foreground">CaseProIQ</span>
             </div>
             <p className="font-paragraph text-sm text-muted-gray-foreground leading-relaxed">
               Bridging the gap between academic education and real-world corporate practice through AI-powered case-solving.
