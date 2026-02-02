@@ -38,12 +38,13 @@ export default function EasyAssessmentPage() {
     try {
       const generatedCases = await generateBusinessCases('easy', 1, selectedCategory);
       setCases(generatedCases);
+      setIsLoading(false);
     } catch (error) {
       console.error('Failed to load cases:', error);
-      // Fallback to retry
+      setIsLoading(false);
+      // Retry after delay
       setTimeout(loadCases, 2000);
     }
-    setIsLoading(false);
   };
 
   const handleAnswerChange = (caseIndex: number, questionIndex: number, value: string) => {
@@ -63,9 +64,15 @@ export default function EasyAssessmentPage() {
     }
 
     setIsSubmitting(true);
-    const evaluation = await evaluateAnswers(cases);
-    setEasyStage(evaluation);
-    navigate('/assessment/easy/feedback');
+    try {
+      const evaluation = await evaluateAnswers(cases);
+      setEasyStage(evaluation);
+      navigate('/assessment/easy/feedback');
+    } catch (error) {
+      console.error('Evaluation failed:', error);
+      alert('An error occurred during evaluation. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   return (

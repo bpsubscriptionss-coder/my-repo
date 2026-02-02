@@ -38,11 +38,13 @@ export default function MediumAssessmentPage() {
     try {
       const generatedCases = await generateBusinessCases('medium', 2, selectedCategory);
       setCases(generatedCases);
+      setIsLoading(false);
     } catch (error) {
       console.error('Failed to load cases:', error);
+      setIsLoading(false);
+      // Retry after delay
       setTimeout(loadCases, 2000);
     }
-    setIsLoading(false);
   };
 
   const handleAnswerChange = (caseIndex: number, questionIndex: number, value: string) => {
@@ -62,9 +64,15 @@ export default function MediumAssessmentPage() {
     }
 
     setIsSubmitting(true);
-    const evaluation = await evaluateAnswers(cases);
-    setMediumStage(evaluation);
-    navigate('/assessment/medium/feedback');
+    try {
+      const evaluation = await evaluateAnswers(cases);
+      setMediumStage(evaluation);
+      navigate('/assessment/medium/feedback');
+    } catch (error) {
+      console.error('Evaluation failed:', error);
+      alert('An error occurred during evaluation. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   return (
