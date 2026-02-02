@@ -56,7 +56,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-primary/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-paragraph text-xs text-muted-gray-foreground">
-              © 2026 CaseNexus. All rights reserved.
+              © 2026 CaseProIQ. All rights reserved.
             </p>
             <div className="flex gap-6">
               <span className="font-paragraph text-xs text-muted-gray-foreground hover:text-primary transition-colors duration-300 cursor-pointer">
