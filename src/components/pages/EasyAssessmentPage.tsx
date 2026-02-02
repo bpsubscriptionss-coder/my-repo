@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, ChevronLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { generateBusinessCases, evaluateAnswers } from '@/services/openai';
@@ -24,6 +24,7 @@ interface Case {
 export default function EasyAssessmentPage() {
   const navigate = useNavigate();
   const setEasyStage = useAssessmentStore((state) => state.setEasyStage);
+  const selectedCategory = useAssessmentStore((state) => state.selectedCategory);
   const [cases, setCases] = useState<Case[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,8 +35,14 @@ export default function EasyAssessmentPage() {
 
   const loadCases = async () => {
     setIsLoading(true);
-    const generatedCases = await generateBusinessCases('easy', 1);
-    setCases(generatedCases);
+    try {
+      const generatedCases = await generateBusinessCases('easy', 1, selectedCategory);
+      setCases(generatedCases);
+    } catch (error) {
+      console.error('Failed to load cases:', error);
+      // Fallback to retry
+      setTimeout(loadCases, 2000);
+    }
     setIsLoading(false);
   };
 
@@ -73,6 +80,13 @@ export default function EasyAssessmentPage() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
+            <button
+              onClick={() => navigate('/category')}
+              className="flex items-center gap-2 text-primary hover:text-primary/80 mb-6 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              <span className="font-paragraph text-sm">Back to Categories</span>
+            </button>
             <div className="flex items-center gap-4 mb-6">
               <div className="bg-primary/20 p-3 rounded-lg">
                 <BookOpen className="h-6 w-6 text-primary" />
@@ -80,7 +94,7 @@ export default function EasyAssessmentPage() {
               <div>
                 <h1 className="font-heading text-5xl text-foreground">Easy Stage Assessment</h1>
                 <p className="font-paragraph text-sm text-muted-gray-foreground mt-2">
-                  Complete 1 business case with 2 questions
+                  Complete 1 business case with 2 questions • Category: <span className="capitalize">{selectedCategory}</span>
                 </p>
               </div>
             </div>

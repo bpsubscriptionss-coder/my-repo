@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
-import { ArrowRight, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen, ChevronLeft } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { generateBusinessCases, evaluateAnswers } from '@/services/openai';
@@ -24,6 +24,7 @@ interface Case {
 export default function MediumAssessmentPage() {
   const navigate = useNavigate();
   const setMediumStage = useAssessmentStore((state) => state.setMediumStage);
+  const selectedCategory = useAssessmentStore((state) => state.selectedCategory);
   const [cases, setCases] = useState<Case[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,8 +35,13 @@ export default function MediumAssessmentPage() {
 
   const loadCases = async () => {
     setIsLoading(true);
-    const generatedCases = await generateBusinessCases('medium', 2);
-    setCases(generatedCases);
+    try {
+      const generatedCases = await generateBusinessCases('medium', 2, selectedCategory);
+      setCases(generatedCases);
+    } catch (error) {
+      console.error('Failed to load cases:', error);
+      setTimeout(loadCases, 2000);
+    }
     setIsLoading(false);
   };
 
@@ -73,6 +79,13 @@ export default function MediumAssessmentPage() {
             transition={{ duration: 0.6 }}
             className="mb-12"
           >
+            <button
+              onClick={() => navigate('/assessment/easy')}
+              className="flex items-center gap-2 text-secondary hover:text-secondary/80 mb-6 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              <span className="font-paragraph text-sm">Back to Easy Stage</span>
+            </button>
             <div className="flex items-center gap-4 mb-6">
               <div className="bg-secondary/20 p-3 rounded-lg">
                 <BookOpen className="h-6 w-6 text-secondary" />
@@ -80,7 +93,7 @@ export default function MediumAssessmentPage() {
               <div>
                 <h1 className="font-heading text-5xl text-foreground">Medium Stage Assessment</h1>
                 <p className="font-paragraph text-sm text-muted-gray-foreground mt-2">
-                  Complete 2 business cases with 2 questions each
+                  Complete 2 business cases with 3 questions each • Category: <span className="capitalize">{selectedCategory}</span>
                 </p>
               </div>
             </div>

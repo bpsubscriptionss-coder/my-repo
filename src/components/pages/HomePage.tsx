@@ -107,7 +107,7 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-6">
                 <Button
-                  onClick={() => navigate('/assessment/easy')}
+                  onClick={() => navigate('/category')}
                   className="group relative overflow-hidden bg-primary hover:bg-primary/90 text-white font-heading text-lg px-10 py-8 rounded-none clip-path-button transition-all duration-300"
                   style={{ clipPath: 'polygon(0 0, 100% 0, 100% 75%, 90% 100%, 0 100%)' }}
                 >
@@ -369,7 +369,7 @@ export default function HomePage() {
             </p>
             
             <Button
-              onClick={() => navigate('/assessment/easy')}
+              onClick={() => navigate('/category')}
               className="group bg-white text-background hover:bg-electric-teal hover:text-background font-heading text-xl px-12 py-8 rounded-none transition-all duration-300"
             >
               START ASSESSMENT <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />

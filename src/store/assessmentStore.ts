@@ -23,9 +23,11 @@ interface AssessmentStore {
   easyStage: StageResult | null;
   mediumStage: StageResult | null;
   difficultStage: StageResult | null;
+  selectedCategory: string;
   setEasyStage: (result: StageResult) => void;
   setMediumStage: (result: StageResult) => void;
   setDifficultStage: (result: StageResult) => void;
+  setSelectedCategory: (category: string) => void;
   reset: () => void;
 }
 
@@ -33,8 +35,10 @@ export const useAssessmentStore = create<AssessmentStore>((set) => ({
   easyStage: null,
   mediumStage: null,
   difficultStage: null,
+  selectedCategory: 'general',
   setEasyStage: (result) => set({ easyStage: result }),
   setMediumStage: (result) => set({ mediumStage: result }),
   setDifficultStage: (result) => set({ difficultStage: result }),
-  reset: () => set({ easyStage: null, mediumStage: null, difficultStage: null }),
+  setSelectedCategory: (category) => set({ selectedCategory: category }),
+  reset: () => set({ easyStage: null, mediumStage: null, difficultStage: null, selectedCategory: 'general' }),
 }));
