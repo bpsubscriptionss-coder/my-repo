@@ -16,7 +16,7 @@ export default function Header() {
           <div className="bg-gradient-to-br from-primary to-secondary p-2 rounded-lg group-hover:scale-110 transition-transform duration-300">
             <Zap className="h-6 w-6 text-primary-foreground" />
           </div>
-          <span className="font-heading text-2xl text-foreground">CaseNexus</span>
+          <span className="font-heading text-2xl text-foreground">CaseProIQ</span>
         </Link>
         
         <nav className="flex items-center gap-8">
