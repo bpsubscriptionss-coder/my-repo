@@ -197,18 +197,18 @@ function generateFallbackEvaluation(cases: Case[]): {
       const hasStakeholder = /stakeholder|customer|employee|investor|market|competitive|competitor/i.test(q.userAnswer);
       const hasActionable = /implement|execute|action|step|phase|timeline|resource|team|responsible/i.test(q.userAnswer);
       
-      let score = 3; // Base score
+      let score = 0; // Base score starts at 0
       
       // Length-based scoring (more detailed answers tend to be better)
-      if (answerLength > 150) score += 0.5;
-      if (answerLength > 300) score += 0.5;
-      if (answerLength > 500) score += 0.5;
+      if (answerLength > 150) score += 1;
+      if (answerLength > 300) score += 1;
+      if (answerLength > 500) score += 1;
       
       // Quality indicators
-      if (hasFramework) score += 1.5;
-      if (hasMetrics) score += 1.5;
-      if (hasRiskMitigation) score += 1;
-      if (hasStakeholder) score += 1;
+      if (hasFramework) score += 2;
+      if (hasMetrics) score += 2;
+      if (hasRiskMitigation) score += 1.5;
+      if (hasStakeholder) score += 1.5;
       if (hasActionable) score += 1;
       
       totalScore += Math.min(score, 10);

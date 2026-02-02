@@ -96,8 +96,7 @@ export default function HomePage() {
               </div>
               
               <h1 className="font-heading text-6xl lg:text-8xl leading-[0.9] tracking-tight mb-8">
-                CASE PRO <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/50">IQ</span>
+                CASEPROIQ
               </h1>
               
               <p className="font-paragraph text-lg lg:text-xl text-muted-gray-foreground max-w-2xl mb-10 leading-relaxed border-l-2 border-primary/50 pl-6">
