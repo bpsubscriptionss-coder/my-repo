@@ -76,6 +76,15 @@ export default function CategorySelectionPage() {
                 'neon-magenta': 'from-neon-magenta/5 to-neon-magenta/10 border-neon-magenta/20 hover:border-neon-magenta/50',
               };
 
+              const buttonColorMap: Record<string, { bg: string; hover: string; text: string }> = {
+                primary: { bg: 'bg-primary', hover: 'hover:bg-blue-400', text: 'text-white' },
+                secondary: { bg: 'bg-secondary', hover: 'hover:bg-purple-400', text: 'text-white' },
+                'electric-teal': { bg: 'bg-electric-teal', hover: 'hover:bg-cyan-300', text: 'text-background' },
+                'neon-magenta': { bg: 'bg-neon-magenta', hover: 'hover:bg-pink-400', text: 'text-white' },
+              };
+
+              const buttonColors = buttonColorMap[category.color];
+
               return (
                 <motion.div
                   key={category.id}
@@ -101,7 +110,7 @@ export default function CategorySelectionPage() {
 
                   <Button
                     onClick={() => handleCategorySelect(category.id)}
-                    className={`w-full bg-electric-teal hover:bg-electric-teal/90 text-background font-heading text-sm px-6 py-3 rounded-lg transition-all duration-300`}
+                    className={`w-full ${buttonColors.bg} ${buttonColors.hover} ${buttonColors.text} font-heading text-sm px-6 py-3 rounded-lg transition-all duration-300`}
                   >
                     Select {category.name}
                   </Button>
